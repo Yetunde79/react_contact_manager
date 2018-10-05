@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Consumer } from '../../context';
 import TextInputGroup from '../layout/TextInputGroup';
-import uuid from 'uuid';
+import axios from 'axios';
 
 class AddContact extends Component {
   state = {
@@ -33,13 +33,16 @@ class AddContact extends Component {
     }
 
     const newContact = {  //create new contact with generated id
-      id: uuid(),
+      id,
       name,
       email,
       phone
     }
 
-    dispatch({ type: 'ADD_CONTACT', payload: newContact }); //type triggers switch func, then it takes the payload ehich is newContact
+    axios.post(`https://jsonplaceholder.typicode.com/users/`, newContact)
+      .then(res => dispatch({ type: 'ADD_CONTACT', payload: res.data }))
+
+    //for dispatch, type triggers it to switch func, then it takes the payload which is newContact
 
     //clear state
     this.setState({
