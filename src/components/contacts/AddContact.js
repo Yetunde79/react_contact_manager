@@ -11,7 +11,7 @@ class AddContact extends Component {
     errors: {}
   };
 
-  onSubmit = (dispatch, e) => {
+  onSubmit = async (dispatch, e) => {
     e.preventDefault();
 
     const { name, email, phone } = this.state; //pull new info from state
@@ -33,15 +33,14 @@ class AddContact extends Component {
     }
 
     const newContact = {  //create new contact with generated id
-      id,
       name,
       email,
       phone
     }
 
-    axios.post(`https://jsonplaceholder.typicode.com/users/`, newContact)
-      .then(res => dispatch({ type: 'ADD_CONTACT', payload: res.data }))
+    const res = await axios.post(`https://jsonplaceholder.typicode.com/users/`, newContact);
 
+    dispatch({ type: 'ADD_CONTACT', payload: res.data });
     //for dispatch, type triggers it to switch func, then it takes the payload which is newContact
 
     //clear state
