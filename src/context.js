@@ -22,7 +22,7 @@ const reducer = (state, action) => { //evaluate type of object/ action type
                 ...state,
                 contacts: state.contacts.map(
                     contact => contact.id === action.payload.id   //check if matches, payload is data we already have
-                        ? (contact = action.payload)  //if it is make contact equal to payload
+                        ? (contact = action.payload)  //if it is the same make contact equal to payload
                         : contact)  //else leave the same
             }
         default:
